@@ -1,4 +1,4 @@
-local util = require("data-util");
+local util = require("__bzchlorine__.data-util");
 
 if not mods.Krastorio2 then
 data:extend({
@@ -6,7 +6,7 @@ data:extend({
     type = "fluid",
     name = "chlorine",
     default_temperature = 25,
-    heat_capacity = "0.1KJ",
+    heat_capacity = "0.1kJ",
     base_color = {r=0.60, g=0.90, b=0.50},
     flow_color = {r=0.60, g=1.00, b=0.50},
     icon = "__bzchlorine__/graphics/icons/chlorine.png",
@@ -17,7 +17,7 @@ data:extend({
     type = "fluid",
     name = "hydrogen-chloride",
     default_temperature = 25,
-    heat_capacity = "0.1KJ",
+    heat_capacity = "0.1kJ",
     base_color = {r=0.80, g=0.90, b=0.70},
     flow_color = {r=0.80, g=1.00, b=0.70},
     icon = "__bzchlorine__/graphics/icons/hcl.png",
@@ -33,7 +33,7 @@ data:extend({
     type = "item",
     name = "ferric-chloride",
     icon = "__bzchlorine__/graphics/icons/ferric-chloride.png",
-    icon_size = 64, icon_mipmaps = 4,
+    icon_size = 64,
     subgroup = "raw-material",
     order = "b[chlorine-fe]",
     stack_size = util.get_stack_size(100),
@@ -42,7 +42,7 @@ data:extend({
     type = "fluid",
     name = "vinyl-chloride",
     default_temperature = 25,
-    heat_capacity = "0.1KJ",
+    heat_capacity = "0.1kJ",
     base_color = {r=0.90, g=0.90, b=0.75},
     flow_color = {r=0.90, g=1.00, b=0.75},
     icon = "__bzchlorine__/graphics/icons/vinyl-chloride.png",
@@ -58,11 +58,12 @@ data:extend({
     type = "recipe",
     name = "chlorine",
     results = {{type="fluid", name="chlorine", amount=10}},
-    ingredients = {{"salt", 2}},
+    ingredients = {{type = "item", name = "salt", amount = 2}},
     enabled = false,
     category = "chemistry",
     subgroup = "fluid-recipes",
     energy_required = 0.5,
+    allow_productivity = true,
   },
   {
     type = "recipe",
@@ -79,7 +80,7 @@ data:extend({
   },
 })
 else
-  util.replace_ingredient("kr-water-electrolysis", "sand", "salt", 2)
+  util.replace_ingredient("kr-water-electrolysis", "kr-sand", "salt", 2)
   if util.se6() then
     util.multiply_time("kr-water-electrolysis", 5.0/28)
   else
@@ -90,9 +91,9 @@ data:extend({
   {
     type = "recipe",
     name = "hydrogen-chloride-salt",
-    results = {{type="fluid", name="hydrogen-chloride", amount=10}},
+    results = {{type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride" , amount=10}},
     ingredients = {
-      {"salt", 1},
+      {type="item", name="salt", amount=1},
       {type="fluid", name="water", amount=5},
       {type="fluid", name="sulfuric-acid", amount=5},
     },
@@ -108,10 +109,10 @@ data:extend({
   {
     type = "recipe",
     name = "ferric-chloride",
-    results = {{"ferric-chloride", 2}},
+    results = {{type="item", name="ferric-chloride", amount=2}},
     ingredients = {
-      {"iron-plate", 2},
-      {type="fluid", name="chlorine", amount=30},
+      {type="item", name="iron-plate", amount = 2},
+      {type="fluid", name = mods.Krastorio2 and "kr-chlorine" or "chlorine", amount=30},
     },
     enabled = false,
     category = "chemistry",
@@ -120,14 +121,14 @@ data:extend({
   {
     type = "recipe",
     name = "ferric-chloride-hcl",
-    results = {{"ferric-chloride", 4}},
+    results = {{type="item", name="ferric-chloride", amount=4}},
     icons = {
         {icon = "__bzchlorine__/graphics/icons/ferric-chloride.png", icon_size=64, scale=1},
         {icon = "__bzchlorine__/graphics/icons/hcl.png", icon_size=128, scale=0.25, shift={8,-8}},
     },
     ingredients = {
-      {"iron-ore", 1},
-      {type="fluid", name="hydrogen-chloride", amount=120},
+      {type="item", name="iron-ore", amount=1},
+      {type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount=120},
     },
     enabled = false,
     category = "chemistry",
@@ -138,7 +139,7 @@ data:extend({
     name = "vinyl-chloride",
     results = {{type="fluid", name="vinyl-chloride", amount=20}},
     ingredients = {
-      {type="fluid", name="chlorine", amount=10},
+      {type="fluid", name=mods.Krastorio2 and "kr-chlorine" or "chlorine", amount=10},
       {type="fluid", name="petroleum-gas", amount=20},
     },
     enabled = false,
@@ -185,11 +186,11 @@ if mods.bzgas then
     {
       type="recipe",
       name="bakelite-hcl",
-      results = {{"bakelite", 3}},
+      results = {{type="item", name="bakelite", amount=3}},
       ingredients = {
-        {data.raw.item["phenol"] and "phenol" or "coal", 1},
+        {type="item", name=data.raw.item["phenol"] and "phenol" or "coal", amount=1},
         {type="fluid", name="formaldehyde", amount=10},
-        {type="fluid", name="hydrogen-chloride", amount=5},
+        {type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount=5},
       },
       icons = {
         {icon = "__bzgas__/graphics/icons/bakelite.png", icon_size=128},
@@ -198,6 +199,7 @@ if mods.bzgas then
       enabled = false,
       category = "chemistry",
       energy_required = 3,
+      allow_productivity = true,
     }
   })
   if mods.Krastorio2 then

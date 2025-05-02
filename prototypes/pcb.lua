@@ -1,4 +1,4 @@
-local util = require("data-util");
+local util = require("__bzchlorine__.data-util");
 
 data:extend({
   {
@@ -31,15 +31,16 @@ data:extend({
     type = "recipe",
     name = "pcb-substrate",
     results = {
-      {"pcb-substrate", 12},
+      {type="item", name="pcb-substrate", amount=12},
     },
     ingredients = {
       {type="fluid", name="epoxy", amount=30},
-      {"plastic-bar", 3},
+      {type="item", name="plastic-bar", amount=3},
     },
     enabled = false,
     category = "chemistry",
     energy_required = 6,
+    allow_productivity = true,
   },
 })
 util.add_unlock("advanced-electronics", "pcb-substrate")
@@ -52,21 +53,22 @@ data:extend({
     type = "recipe",
     name = "pcb",
     results = {
-      {"pcb", 4},
+      {type="item", name="pcb", amount=4},
     },
     ingredients = util.me.more() and {
-      {"pcb-substrate", 4},
-      {"copper-plate", 1},
-      {"ferric-chloride", 2},
+      {type="item", name="pcb-substrate", amount=4},
+      {type="item", name="copper-plate", amount=1},
+      {type="item", name="ferric-chloride", amount=2},
       {type="fluid", name="water", amount=20},
     } or {
-      {"pcb-substrate", 4},
-      {"copper-plate", 1},
-      {type="fluid", name="hydrogen-chloride", amount=30}
+      {type="item", name="pcb-substrate",amount= 4},
+      {type="item", name="copper-plate", amount=1},
+      {type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount=30}
     },
     enabled = false,
     category = "crafting-with-fluid",
     energy_required = 8,
+    allow_productivity = true,
   },
 })
 util.add_unlock("advanced-electronics", "pcb")
