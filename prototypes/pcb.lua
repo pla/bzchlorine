@@ -43,7 +43,7 @@ data:extend({
     allow_productivity = true,
   },
 })
-util.add_unlock("advanced-electronics", "pcb-substrate")
+util.add_unlock("advanced-circuit", "pcb-substrate")
 -- These updates should be in data phase
 util.replace_some_ingredient("pcb-substrate", "plastic-bar", 1, "silica", 3, {force=true})
 
@@ -71,6 +71,6 @@ data:extend({
     allow_productivity = true,
   },
 })
-util.add_unlock("advanced-electronics", "pcb")
+util.add_unlock("advanced-circuit", "pcb")
 
 end
