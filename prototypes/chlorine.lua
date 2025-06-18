@@ -41,6 +41,7 @@ data:extend({
   {
     type = "fluid",
     name = "vinyl-chloride",
+    subgroup = "fluid",
     default_temperature = 25,
     heat_capacity = "0.1kJ",
     base_color = {r=0.90, g=0.90, b=0.75},
