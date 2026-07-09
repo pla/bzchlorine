@@ -1,100 +1,96 @@
-local resource_autoplace = require('resource-autoplace');
+local resource_autoplace = require("resource-autoplace")
 
-local futil = require("util");
-local util = require("__bzchlorine__.data-util");
+local futil = require("util")
+local util = require("__bzchlorine__.data-util")
 
 if util.me.salt() then
-local planet = "nauvis"
+  local planet = "nauvis"
 
-resource_autoplace.initialize_patch_set("salt", true)
-data.raw.planet[planet].map_gen_settings.autoplace_controls["salt"] = {}
-data.raw.planet[planet].map_gen_settings.autoplace_settings.entity.settings["salt"] = {}
+  resource_autoplace.initialize_patch_set("salt", true)
+  data.raw.planet[planet].map_gen_settings.autoplace_controls["salt"] = {}
+  data.raw.planet[planet].map_gen_settings.autoplace_settings.entity.settings["salt"] = {}
 
-local particle = futil.table.deepcopy(data.raw["optimized-particle"]["stone-particle"])
-particle.name = "salt-particle"
+  local particle = futil.table.deepcopy(data.raw["optimized-particle"]["stone-particle"])
+  particle.name = "salt-particle"
 
-for i, picture in ipairs(particle.pictures) do
-  local tint = {r=1, g=1, b=1, a=0}
-  picture.tint = tint
-end
+  for i, picture in ipairs(particle.pictures) do
+    local tint = { r = 1, g = 1, b = 1, a = 0 }
+    picture.tint = tint
+  end
 
-data:extend({particle})
+  data:extend({ particle })
 
-data:extend({
-	{
-    type = "autoplace-control",
-    category = "resource",
-    name = "salt",
-    richness = true,
-    order = "b-e"
-	},
-	{
-    type = "resource",
-    icon_size = 128,
-    name = "salt",
-    icon = "__bzchlorine__/graphics/icons/salt.png",
-    flags = {"placeable-neutral"},
-    order="a-b-a",
-    map_color = {r=0.92, g=1.00, b=0.93},
-    tree_removal_probability=1,
-    tree_removal_max_distance=32*32,
-    minable =
+  data:extend({
     {
-      hardness = 1,
-      mining_particle = "salt-particle",
-      mining_time = 0.5,
-      result = "salt"
-    },
-    collision_box = {{ -0.1, -0.1}, {0.1, 0.1}},
-    selection_box = {{ -0.5, -0.5}, {0.5, 0.5}},
-
-    autoplace = resource_autoplace.resource_autoplace_settings{
+      type = "autoplace-control",
+      category = "resource",
       name = "salt",
-      order = "b-z",
-      base_density = 3,
-      base_spots_per_km2 = 2,
-      regular_rq_factor_multiplier = 2.0,
-      has_starting_area_placement = util.me.starting_patch(),
+      richness = true,
+      order = "b-e",
     },
+    {
+      type = "resource",
+      icon_size = 128,
+      name = "salt",
+      icon = "__bzchlorine__/graphics/icons/salt.png",
+      flags = { "placeable-neutral" },
+      order = "a-b-a",
+      map_color = { r = 0.92, g = 1.00, b = 0.93 },
+      tree_removal_probability = 1,
+      tree_removal_max_distance = 32 * 32,
+      minable = {
+        hardness = 1,
+        mining_particle = "salt-particle",
+        mining_time = 0.5,
+        result = "salt",
+      },
+      collision_box = { { -0.1, -0.1 }, { 0.1, 0.1 } },
+      selection_box = { { -0.5, -0.5 }, { 0.5, 0.5 } },
 
-    stage_counts = {15000, 9500, 5500, 2900, 1300, 400, 150, 80},
-        stages =
-        {
-          sheet =
-          {
-            filename = "__bzchlorine__/graphics/entity/ores/hr-salt.png",
-              priority = "extra-high",
-              size = 128,
-              frame_count = 8,
-              variation_count = 8,
-              scale = 0.5
-          }
+      autoplace = resource_autoplace.resource_autoplace_settings({
+        name = "salt",
+        order = "b-z",
+        base_density = 3,
+        base_spots_per_km2 = 2,
+        regular_rq_factor_multiplier = 2.0,
+        has_starting_area_placement = util.me.starting_patch(),
+      }),
+
+      stage_counts = { 15000, 9500, 5500, 2900, 1300, 400, 150, 80 },
+      stages = {
+        sheet = {
+          filename = "__bzchlorine__/graphics/entity/ores/hr-salt.png",
+          priority = "extra-high",
+          size = 128,
+          frame_count = 8,
+          variation_count = 8,
+          scale = 0.5,
+        },
+      },
     },
-  },
-})
+  })
 
--- local richness = data.raw.resource["salt"].autoplace.richness_expression  
--- local probability = data.raw.resource["salt"].autoplace.probability_expression  
+  -- local richness = data.raw.resource["salt"].autoplace.richness_expression
+  -- local probability = data.raw.resource["salt"].autoplace.probability_expression
 
--- if not util.me.starting_patch() then
---   -- Modify salt autoplace richness: 
---   -- After 500 tiles it's standard
---   -- After 250 tiles it scales up
---   data.raw.resource["salt"].autoplace.richness_expression = 
---     richness * noise.if_else_chain(
---         noise.less_than(noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")), noise.to_noise_expression(500)),
---         (noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")) - 275)/475,
---         1)
+  -- if not util.me.starting_patch() then
+  --   -- Modify salt autoplace richness:
+  --   -- After 500 tiles it's standard
+  --   -- After 250 tiles it scales up
+  --   data.raw.resource["salt"].autoplace.richness_expression =
+  --     richness * noise.if_else_chain(
+  --         noise.less_than(noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")), noise.to_noise_expression(500)),
+  --         (noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")) - 275)/475,
+  --         1)
 
---   data.raw.resource["salt"].autoplace.probability_expression = 
---     probability * noise.if_else_chain(
---         noise.less_than(noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")), noise.to_noise_expression(249)),
---         0,
---         noise.less_than(noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")), noise.to_noise_expression(250)),
---         0.3,
---         1)
--- end
-
+  --   data.raw.resource["salt"].autoplace.probability_expression =
+  --     probability * noise.if_else_chain(
+  --         noise.less_than(noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")), noise.to_noise_expression(249)),
+  --         0,
+  --         noise.less_than(noise.distance_from(noise.var("x"), noise.var("y"), noise.var("starting_positions")), noise.to_noise_expression(250)),
+  --         0.3,
+  --         1)
+  -- end
 end
 data:extend({
   {
@@ -103,23 +99,23 @@ data:extend({
     icon_size = 128,
     icon = "__bzchlorine__/graphics/icons/salt.png",
     pictures = {
-      {filename="__bzchlorine__/graphics/icons/salt.png",   size=128, scale=0.25},
-      {filename="__bzchlorine__/graphics/icons/salt-1.png", size=128, scale=0.25},
-      {filename="__bzchlorine__/graphics/icons/salt-2.png", size=128, scale=0.25},
-      {filename="__bzchlorine__/graphics/icons/salt-3.png", size=128, scale=0.25},
-      {filename="__bzchlorine__/graphics/icons/salt-4.png", size=128, scale=0.25},
+      { filename = "__bzchlorine__/graphics/icons/salt.png", size = 128, scale = 0.25 },
+      { filename = "__bzchlorine__/graphics/icons/salt-1.png", size = 128, scale = 0.25 },
+      { filename = "__bzchlorine__/graphics/icons/salt-2.png", size = 128, scale = 0.25 },
+      { filename = "__bzchlorine__/graphics/icons/salt-3.png", size = 128, scale = 0.25 },
+      { filename = "__bzchlorine__/graphics/icons/salt-4.png", size = 128, scale = 0.25 },
     },
     subgroup = "raw-resource",
     order = "t-c-a",
-    stack_size = util.get_stack_size(50)
+    stack_size = util.get_stack_size(50),
   },
   {
     type = "recipe",
     name = "salt",
-    results = {{type = "item", name = "salt", amount = 1}},
-    ingredients = {{type="fluid", name="water", amount=100}},
+    results = { { type = "item", name = "salt", amount = 1 } },
+    ingredients = { { type = "fluid", name = "water", amount = 100 } },
     enabled = not not mods["aai-industry"],
-    category = "crafting-with-fluid",
+    categories = { "crafting-with-fluid" },
     energy_required = 2,
   },
 })
@@ -131,7 +127,7 @@ if mods.Krastorio2 then
       results = {{type = "item", name = "salt", amount = 1}},
       ingredients = {{type="fluid", name="water", amount=100}},
       enabled = false,
-      category = "kr-fluid-filtration",
+      categories = {"kr-fluid-filtration"},
       energy_required = 0.4,
     },
   })

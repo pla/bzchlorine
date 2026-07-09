@@ -25,7 +25,7 @@ data:extend({
 		type = "string-setting",
 		name = "bzchlorine-early-salt",
 		setting_type = "startup",
-		default_value = "assembler",
+		default_value = "mining",
     allowed_values = {"assembler", "mining", "both"},
     order = "c2",
 	},

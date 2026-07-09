@@ -1,4 +1,4 @@
-local util = require("__bzchlorine__.data-util");
+local util = require("__bzchlorine__.data-util")
 
 data:extend({
   {
@@ -11,19 +11,18 @@ data:extend({
     stack_size = util.get_stack_size(200),
   },
 })
-if (not mods.bobelectronics and not mods.MDbobelectronics) then
-data:extend({
-  {
-    type = "item",
-    name = "pcb",
-    icon = "__bzchlorine__/graphics/icons/pcb.png",
-    icon_size = 128,
-    subgroup = "intermediate-product",
-    order = "f[advanced-circuit][pcb]",
-    stack_size = util.get_stack_size(200),
-  },
-
-})
+if not mods.bobelectronics and not mods.MDbobelectronics then
+  data:extend({
+    {
+      type = "item",
+      name = "pcb",
+      icon = "__bzchlorine__/graphics/icons/pcb.png",
+      icon_size = 128,
+      subgroup = "intermediate-product",
+      order = "f[advanced-circuit][pcb]",
+      stack_size = util.get_stack_size(200),
+    },
+  })
 end
 
 data:extend({
@@ -31,21 +30,21 @@ data:extend({
     type = "recipe",
     name = "pcb-substrate",
     results = {
-      {type="item", name="pcb-substrate", amount=12},
+      { type = "item", name = "pcb-substrate", amount = 12 },
     },
     ingredients = {
-      {type="fluid", name="epoxy", amount=30},
-      {type="item", name="plastic-bar", amount=3},
+      { type = "fluid", name = "epoxy", amount = 30 },
+      { type = "item", name = "plastic-bar", amount = 3 },
     },
     enabled = false,
-    category = "chemistry",
+    categories = { "chemistry" },
     energy_required = 6,
     allow_productivity = true,
   },
 })
 util.add_unlock("advanced-circuit", "pcb-substrate")
 -- These updates should be in data phase
-util.replace_some_ingredient("pcb-substrate", "plastic-bar", 1, "silica", 3, {force=true})
+util.replace_some_ingredient("pcb-substrate", "plastic-bar", 1, "silica", 3, { force = true })
 
 if (not mods.bobelectronics and not mods.MDbobelectronics) then
 data:extend({
@@ -66,7 +65,7 @@ data:extend({
       {type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount=30}
     },
     enabled = false,
-    category = "crafting-with-fluid",
+    categories = {"crafting-with-fluid"},
     energy_required = 8,
     allow_productivity = true,
   },

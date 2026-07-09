@@ -1,4 +1,4 @@
-local util = require("data-util");
+local util = require("data-util")
 
 data:extend({
   {
@@ -29,7 +29,7 @@ data:extend({
       {type="fluid", name="petroleum-gas", amount=10},
     },
     enabled = false,
-    category = "chemistry",
+    categories = {"chemistry"},
     subgroup = "fluid-recipes",
     energy_required = 3,
     allow_productivity = true,

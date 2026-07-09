@@ -1,4 +1,4 @@
-local util = require("__bzchlorine__.data-util");
+local util = require("__bzchlorine__.data-util")
 
 if not mods.Krastorio2 then
 data:extend({
@@ -61,7 +61,7 @@ data:extend({
     results = {{type="fluid", name="chlorine", amount=10}},
     ingredients = {{type = "item", name = "salt", amount = 2}},
     enabled = false,
-    category = "chemistry",
+    categories = {"chemistry"},
     subgroup = "fluid-recipes",
     energy_required = 0.5,
     allow_productivity = true,
@@ -75,7 +75,7 @@ data:extend({
       {type="fluid", name="chlorine", amount=10},
     },
     enabled = false,
-    category = "chemistry",
+    categories = {"chemistry"},
     subgroup = "fluid-recipes",
     energy_required = 10,
   },
@@ -83,7 +83,7 @@ data:extend({
 else
   util.replace_ingredient("kr-water-electrolysis", "kr-sand", "salt", 2)
   if util.se6() then
-    util.multiply_time("kr-water-electrolysis", 5.0/28)
+    util.multiply_time("kr-water-electrolysis", 5.0 / 28)
   else
     util.multiply_time("kr-water-electrolysis", 0.5)
   end
@@ -92,90 +92,91 @@ data:extend({
   {
     type = "recipe",
     name = "hydrogen-chloride-salt",
-    results = {{type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride" , amount=10}},
+    results = { { type = "fluid", name = mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount = 10 } },
     ingredients = {
-      {type="item", name="salt", amount=1},
-      {type="fluid", name="water", amount=5},
-      {type="fluid", name="sulfuric-acid", amount=5},
+      { type = "item", name = "salt", amount = 1 },
+      { type = "fluid", name = "water", amount = 5 },
+      { type = "fluid", name = "sulfuric-acid", amount = 5 },
     },
     enabled = false,
-    category = "chemistry",
+    categories = { "chemistry" },
     subgroup = "fluid-recipes",
     energy_required = 1,
   },
 })
 
 if util.me.more() then
-data:extend({
-  {
-    type = "recipe",
-    name = "ferric-chloride",
-    results = {{type="item", name="ferric-chloride", amount=2}},
-    ingredients = {
-      {type="item", name="iron-plate", amount = 2},
-      {type="fluid", name = mods.Krastorio2 and "kr-chlorine" or "chlorine", amount=30},
+  data:extend({
+    {
+      type = "recipe",
+      name = "ferric-chloride",
+      results = { { type = "item", name = "ferric-chloride", amount = 2 } },
+      ingredients = {
+        { type = "item", name = "iron-plate", amount = 2 },
+        { type = "fluid", name = mods.Krastorio2 and "kr-chlorine" or "chlorine", amount = 30 },
+      },
+      enabled = false,
+      categories = { "chemistry" },
+      energy_required = 3,
     },
-    enabled = false,
-    category = "chemistry",
-    energy_required = 3,
-  },
-  {
-    type = "recipe",
-    name = "ferric-chloride-hcl",
-    results = {{type="item", name="ferric-chloride", amount=4}},
-    icons = {
-        {icon = "__bzchlorine__/graphics/icons/ferric-chloride.png", icon_size=64, scale=1},
-        {icon = "__bzchlorine__/graphics/icons/hcl.png", icon_size=128, scale=0.25, shift={8,-8}},
+    {
+      type = "recipe",
+      name = "ferric-chloride-hcl",
+      results = { { type = "item", name = "ferric-chloride", amount = 4 } },
+      icons = {
+        { icon = "__bzchlorine__/graphics/icons/ferric-chloride.png", icon_size = 64, scale = 1 },
+        { icon = "__bzchlorine__/graphics/icons/hcl.png", icon_size = 128, scale = 0.25, shift = { 8, -8 } },
+      },
+      ingredients = {
+        { type = "item", name = "iron-ore", amount = 1 },
+        { type = "fluid", name = mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount = 120 },
+      },
+      enabled = false,
+      categories = { "chemistry" },
+      energy_required = 3,
     },
-    ingredients = {
-      {type="item", name="iron-ore", amount=1},
-      {type="fluid", name=mods.Krastorio2 and "kr-hydrogen-chloride" or "hydrogen-chloride", amount=120},
+    {
+      type = "recipe",
+      name = "vinyl-chloride",
+      results = { { type = "fluid", name = "vinyl-chloride", amount = 20 } },
+      ingredients = {
+        { type = "fluid", name = mods.Krastorio2 and "kr-chlorine" or "chlorine", amount = 10 },
+        { type = "fluid", name = "petroleum-gas", amount = 20 },
+      },
+      enabled = false,
+      categories = { "chemistry" },
+      subgroup = "fluid-recipes",
+      energy_required = 3,
     },
-    enabled = false,
-    category = "chemistry",
-    energy_required = 3,
-  },
-  {
-    type = "recipe",
-    name = "vinyl-chloride",
-    results = {{type="fluid", name="vinyl-chloride", amount=20}},
-    ingredients = {
-      {type="fluid", name=mods.Krastorio2 and "kr-chlorine" or "chlorine", amount=10},
-      {type="fluid", name="petroleum-gas", amount=20},
-    },
-    enabled = false,
-    category = "chemistry",
-    subgroup = "fluid-recipes",
-    energy_required = 3,
-  },
-})
+  })
 end
 util.add_unlock("plastics", "vinyl-chloride")
 
 if not mods.Krastorio2 then
-data:extend({
-  {
-    type="technology",
-    name="chlorine-processing",
-    icons = {
-      {icon = "__bzchlorine__/graphics/technology/salt-tech.png", icon_size = 256, tint={a=.75,r=1,b=1,g=1} },
+  data:extend({
+    {
+      type = "technology",
+      name = "chlorine-processing",
+      icons = {
+        { icon = "__bzchlorine__/graphics/technology/salt-tech.png", icon_size = 256, tint = { a = 0.75, r = 1, b = 1, g = 1 } },
+      },
+      effects = {
+        { type = "unlock-recipe", recipe = "chlorine" },
+        { type = "unlock-recipe", recipe = "hydrogen-chloride-salt" },
+        { type = "unlock-recipe", recipe = "hydrogen-chloride-pure" },
+      },
+      unit = {
+        count = 70,
+        time = 30,
+        ingredients = { { "automation-science-pack", 1 }, { "logistic-science-pack", 1 } },
+      },
+      prerequisites = { "fluid-handling" },
     },
-    effects = {
-      { type = "unlock-recipe", recipe = "chlorine" },
-      { type = "unlock-recipe", recipe = "hydrogen-chloride-salt" },
-      { type = "unlock-recipe", recipe = "hydrogen-chloride-pure" },
-    },
-    unit = {
-      count = 70, time = 30,
-      ingredients = {{"automation-science-pack", 1}, {"logistic-science-pack", 1}},
-    },
-    prerequisites = {"fluid-handling"},
-  },
-})
-util.add_unlock("chlorine-processing", "ferric-chloride")
-util.add_unlock("chlorine-processing", "ferric-chloride-hcl")
-util.add_unlock("fluid-handling", "chemical-plant")
-util.remove_recipe_effect("oil-processing", "chemical-plant")
+  })
+  util.add_unlock("chlorine-processing", "ferric-chloride")
+  util.add_unlock("chlorine-processing", "ferric-chloride-hcl")
+  util.add_unlock("fluid-handling", "chemical-plant")
+  util.remove_recipe_effect("oil-processing", "chemical-plant")
 else
   util.add_unlock("kr-fluids-chemistry", "ferric-chloride")
   util.add_unlock("kr-fluids-chemistry", "ferric-chloride-hcl")
@@ -198,7 +199,7 @@ if mods.bzgas then
         {icon = "__bzchlorine__/graphics/icons/hcl.png", icon_size=128, scale=0.125, shift={-8,-8}},
       },
       enabled = false,
-      category = "chemistry",
+      categories = {"chemistry"},
       energy_required = 3,
       allow_productivity = true,
     }
