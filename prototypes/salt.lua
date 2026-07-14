@@ -135,6 +135,6 @@ end
 if mods.Krastorio2 then
   util.add_unlock("kr-fluids-chemistry", "salt-filtration")
 end
-if not mods["aai-industry"] then
+if not mods["aai-industry"] and not settings.startup["bzchlorine-early-salt"].value == "mining" then
   util.add_unlock("automation", "salt")
 end
